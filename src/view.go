@@ -46,5 +46,16 @@ func (m Model) View() tea.View {
 		footerStyle.Render("Ctrl+S Save | Ctrl+Q Quit"),
 	}, "\n")
 
-	return tea.NewView(appStyle.Render(content))
+	if m.saveAs {
+		view := tea.NewView(
+			appStyle.Render("Enter filename: " + m.filenameInput.View()),
+		)
+		view.AltScreen = true
+		return view
+	}
+
+	view := tea.NewView(appStyle.Render(content))
+	view.AltScreen = true
+
+	return view
 }
